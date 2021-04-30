@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1609436858482.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "664E8339",
+    "lastKnownWriteTime" : 1616793616,
+    "last_content_update" : 1616793616638,
+    "path" : "~/Golding Lab/MSO Diversity Paper/MSO_CellTypes/FinalGraphs_StandardizeAes.R",
+    "project_path" : "FinalGraphs_StandardizeAes.R",
+    "properties" : {
+        "cursorPosition" : "264,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

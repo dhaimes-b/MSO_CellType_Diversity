@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1605285787224.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F7AF3B54",
+    "lastKnownWriteTime" : 1616793616,
+    "last_content_update" : 1616793616565,
+    "path" : "~/Golding Lab/MSO Diversity Paper/MSO_CellTypes/DataImport_Clean.R",
+    "project_path" : "DataImport_Clean.R",
+    "properties" : {
+        "cursorPosition" : "58,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

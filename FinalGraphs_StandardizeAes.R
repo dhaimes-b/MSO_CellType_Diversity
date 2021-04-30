@@ -26,8 +26,8 @@ pairs <- c(c("Phasic", "Oscillator"),c("Phasic","Tonic"),c("Oscillator","Tonic")
 
 df_Subtype_All %>% 
   ggplot(aes(x=Subtype_Expand, 
-             y=Steady.State.Input.Resistance,
-             #y=Peak.input.Resistance,
+             #y=Steady.State.Input.Resistance,
+             y=Peak.input.Resistance,
              color = Subtype_Expand)) +
   geom_quasirandom(varwidth = T,dodge.width = .5,bandwidth = .3)+
   geom_boxplot(outlier.alpha = 0, fill = NA, coef = 0)+
@@ -36,11 +36,11 @@ df_Subtype_All %>%
   scale_x_discrete(labels=POTAlabels)+
   scale_y_continuous(trans = "log10",limits = c(4,1000))+
   annotation_logticks(sides = "l")+
-  ylab("Steady State Input Resistance (log MOhm)")+
+  ylab("Peak Input Resistance (log MOhm)")+
   xlab("Firing Types" )+
   stat_compare_means(label = "p.signif", ref.group = ".all.")+
   theme(legend.position="none")
-ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/SteadyStateRin_FiringTypeAll.eps", width = 4.5, height = 2.55, unit = "in")
+ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/PeakRin_FiringTypeAll.eps", width = 4.5, height = 2.55, unit = "in")
 #Not on Log scale
 df_Subtype_All %>% 
   ggplot(aes(x=Subtype_Expand, 
@@ -74,7 +74,7 @@ ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/APAmp.eps", width = 4.5, h
 # 1 - H
 df_Subtype_All %>% 
   ggplot(aes(x=Subtype_Expand, 
-             y=Threshold.Relative.Rest,
+             y=Absolute.Threshold,
              color = Subtype_Expand)) +
   geom_quasirandom(varwidth = T,dodge.width = .5)+
   geom_boxplot(outlier.alpha = 0, fill = NA, coef = 0)+
@@ -82,11 +82,10 @@ df_Subtype_All %>%
   theme_pubr()+
   scale_x_discrete(labels=POTAlabels)+
   stat_compare_means(label = "p.signif", ref.group = ".all.")+
-  ylim(0,40)+
-  ylab("AP Threshold Relative Rest (mV)")+
+  ylab("Absolute Threshold (mV)")+
   xlab("Firing Types" )+
   theme(legend.position="none")
-ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/Thresh.eps", width = 4.5, height = 2.55, unit = "in")
+ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/AbsThresh.eps", width = 4.5, height = 2.55, unit = "in")
 
 # 1 - I
 df_Subtype_All %>% 
@@ -107,14 +106,24 @@ ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/Resonance.eps", width = 4.
 
 # Getting statistics for comparisons
 compare_means(Steady.State.Input.Resistance ~ Subtype_Precise,
+              data = df_Ephys_Clean, method="kruskal.test", comparisons=pairs)
+compare_means(Steady.State.Input.Resistance ~ Subtype_Precise,
               data = df_Ephys_Clean, ref.group=".all.")
 compare_means(Spike.Amp..Relative.Rest ~ Subtype_Precise,
-              data = df_Ephys_Clean, ref.group=".all.")
-compare_means(Threshold.Relative.Rest ~ Subtype_Precise,
-              data = df_Ephys_Clean, ref.group=".all.")
+              data = df_Ephys_Clean, method="kruskal.test", comparisons=pairs)
+compare_means(Spike.Amp..Relative.Rest ~ Subtype_Precise,
+              data = df_Ephys_Clean, comparison = pairs)
+compare_means(Absolute.Threshold ~ Subtype_Precise,
+              data = df_Ephys_Clean, method="kruskal.test", comparisons=pairs)
+compare_means(Absolute.Threshold ~ Subtype_Precise,
+              data = df_Ephys_Clean, comparison= pairs)
 compare_means(Resonance.Frequency ~ Subtype_Precise,
-              data = df_Ephys_Clean, ref.group=".all.")
+              data = df_Ephys_Clean, method="kruskal.test", comparisons=pairs)
+compare_means(Resonance.Frequency ~ Subtype_Precise,
+              data = df_Ephys_Clean, comparisons = pairs)
 
+compare_means(Rheobase.Current ~ Subtype_Precise,
+              data = df_Ephys_Clean, comparison= pairs)
 
 # *************************************** \\
 # updates based on Nace notes 12/31/20
@@ -160,7 +169,7 @@ df_Morph_Clean %>%
 
 # Mean dendritic length - total.dendrite.mean.len
 df_Morph_Clean %>% 
-  ggplot(aes(y = total.dendrite.mean.len, 
+  ggplot(aes(y = total.lateral.dendrite.mean.len, 
              x= DV_NLG,
              color = Subtype_Precise)) +
   geom_smooth(method = "lm",se = F, lwd = 2)+
@@ -174,7 +183,24 @@ df_Morph_Clean %>%
   xlim(0,1)+ylim(0,500)+
   ylab("Mean Dendritic Length")+xlab("D-V Normalized Position")+
   theme_pubr()+
-  ggtitle("Update 3-9-21: Mean Dendritic Length")
+  ggtitle("Update 3-9-21: Mean LATERAL Dendritic Length")
+df_Morph_Clean %>% 
+  ggplot(aes(y = total.Medial.dendrite.mean.len, 
+             x= DV_NLG,
+             color = Subtype_Precise)) +
+  geom_smooth(method = "lm",se = F, lwd = 2)+
+  stat_poly_eq(formula = my.formula, 
+               aes(label = paste(..rr.label.., sep = "~~~")),
+               label.x = .5,
+               parse = TRUE,position = "dodge") +   
+  geom_point() +
+  scale_color_manual(name = "Firing Type", values = POTcolors, 
+                     labels = POTlabels)+
+  xlim(0,1)+ylim(0,500)+
+  ylab("Mean Dendritic Length")+xlab("D-V Normalized Position")+
+  theme_pubr()+
+  ggtitle("Update 3-9-21: Mean MEDIAL Dendritic Length")
+
 
 # Age Distr
 df_Filter <- df_Ephys_Clean %>% 
@@ -228,6 +254,13 @@ ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/AgeDistr_InputResistance.e
 df_Ephys_Clean %>% 
   filter(Subtype_Precise == 3) %>% 
   summarise(Age)
+
+df_Filter %>% 
+  group_by(Subtype_Precise) %>% 
+  summarise(AgeBin) %>% 
+  table()
+
+
 
 # Morph PCA
 
@@ -361,3 +394,29 @@ grid.arrange(p1,p2)
     xlab("Postnatal Age (Days)") +
     xlim(0,80)+
     theme(legend.position="none")
+  
+  
+  
+# Figure 5 EPSP Stats
+  
+  compare_means(EPSP.halfwidth ~ Subtype_Precise,
+                data = df_Ephys_Clean, method="kruskal.test")#, comparisons=pairs)
+  compare_means(EPSP.halfwidth ~ Subtype_Precise,
+                data = df_Ephys_Clean, comparisons = pairs)
+
+  
+  
+  
+  df_Ephys_Clean %>% 
+    filter(Age > 0) %>% 
+    ggplot(aes(x= FFT.Peak.Freq,
+               y= log(FFT.Peak.power),
+               color = Subtype_Precise)) +
+    geom_jitter()+
+    scale_color_manual(name = "Subtype", values = POTcolors, 
+                       labels = POTlabels)+
+    theme_pubr()+
+    ylab("power")+
+    xlab("freq") +
+    theme(legend.position="none")
+  

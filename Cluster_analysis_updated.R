@@ -38,6 +38,8 @@ fviz_pca_biplot(ephys_pca,
              addEllipses = T)+
   theme_pubr()+theme(legend.position = "none")+
   ggtitle("EPHYS: 474 cells, 12 variables; MICE imputation; 3-9-21")
+ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/PCA_Ephys.eps", width = 6, height = 5, unit = "in")
+
 
 
 ## ******** Morphological Parameters ********** \\
@@ -113,6 +115,8 @@ fviz_pca_biplot(all_pca,
              addEllipses = T)+
   theme_pubr()+theme(legend.position = "none")+
   ggtitle("Everything: 200 cells, 31 variables; MICE imputation; 3-11-21")
+ggsave("C:/Users/dhaim/Box/MSO Cell Type - Brian Data/PCA_All.eps", width = 5, height = 7, unit = "in")
+
 dim(removed.all_pca)
 
 fviz_pca_var(all_pca, col.var = "contrib",

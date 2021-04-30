@@ -44,7 +44,7 @@ df_Prefilter <- df
 
 df_Ephys_Clean <- df %>% 
   filter(is.na(Excluded_Physiology)) %>% 
-  filter(Age > 16) %>% 
+  filter(Age > 17) %>% 
   filter(Cell.Name != "150720_09") # incredibly high RinSS phasic removed
 
 
